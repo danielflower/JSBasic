@@ -1,0 +1,3 @@
+﻿10 a$ = inkey$
+20 if a$ <> "" then print "You pressed " a$
+30 goto 10

@@ -1,0 +1,8 @@
+﻿10 print "Hello"
+20 rem Get the user to enter their name, and hold the result in the variable a$
+30 input "Please enter your name or type quit " a$
+40 rem Quit if the user entered "quit"
+50 if a$ = "quit" then goto 80
+60 print "Hello " a$
+70 goto 30
+80 print "Goodbye"

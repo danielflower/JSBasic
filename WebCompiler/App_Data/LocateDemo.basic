@@ -1,0 +1,4 @@
+﻿10 locate 13,4
+20 print "Down here"
+30 locate 2, 10
+40 print "Up here"

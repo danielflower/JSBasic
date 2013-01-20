@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+	<title>SpaceWar.basic</title>
+	<meta content="TextPad 5.0.3" name="Generator" />
+	<meta content="text/css" http-equiv="Content-Style-Type" />
+	<style type="text/css">
+<!--
+.TPtext { color: #000000; background-color: #FFFFFF; }
+.TPkeyword1 { color: #0000FF; background-color: #FFFFFF; }
+.TPkeyword3 { color: #000080; background-color: #FFFFFF; }
+.TPkeyword4 { color: #000080; background-color: #FFFFFF; }
+.TPkeyword5 { color: #000080; background-color: #FFFFFF; }
+.TPcomment { color: #008000; background-color: #FFFFFF; }
+.TPnumber { color: #000000; background-color: #FFFFFF; }
+.TPstring { color: #008080; background-color: #FFFFFF; }
+.TPbracket { color: #FF0000; background-color: #FFFFFF; }
+.TPoperator { color: #000000; background-color: #FFFFFF; }
+--></style>
+</head>
+<body>
+
+	<p style="font-family:Arial;"><a href="SpaceWar.htm">&lt;&lt; Back to Space War</a></p>
+
+	<pre>
+
+<span class="TPnumber">10 </span><span class="TPkeyword1">cls</span>
+<span class="TPnumber">20 </span><span class="TPkeyword1">locate </span><span class="TPnumber">5</span>, <span class="TPnumber">8</span>
+<span class="TPnumber">30 </span><span class="TPkeyword1">print </span><span class="TPstring">" S P A C E   W A R"</span>
+<span class="TPnumber">40 </span><span class="TPkeyword1">locate </span><span class="TPnumber">8</span>, <span class="TPnumber">2</span>
+<span class="TPnumber">50 </span><span class="TPkeyword1">print </span><span class="TPstring">"Keys: 'A' to go up"</span>
+<span class="TPnumber">70 </span><span class="TPkeyword1">print </span><span class="TPkeyword4">space$</span><span class="TPbracket">(</span><span class="TPnumber">8</span><span class="TPbracket">) </span><span class="TPstring">"'Z' to go down" </span>: <span class="TPkeyword1">print </span><span class="TPkeyword4">space$</span><span class="TPbracket">(</span><span class="TPnumber">8</span><span class="TPbracket">) </span><span class="TPstring">"&lt;space&gt; to shoot"</span>
+<span class="TPnumber">75 </span><span class="TPkeyword1">print </span>: <span class="TPkeyword1">print </span>: <span class="TPkeyword1">print </span><span class="TPkeyword4">space$</span><span class="TPbracket">(</span><span class="TPnumber">8</span><span class="TPbracket">) </span><span class="TPstring">"First to 10 points wins"</span>
+<span class="TPnumber">80 </span><span class="TPkeyword1">print </span>: <span class="TPkeyword1">print </span>: <span class="TPkeyword1">print </span><span class="TPkeyword4">space$</span><span class="TPbracket">(</span><span class="TPnumber">8</span><span class="TPbracket">) </span><span class="TPstring">"Press &lt;space&gt; to start"</span>
+<span class="TPnumber">90 </span><span class="TPkeyword1">if </span><span class="TPkeyword4">inkey$ </span><span class="TPoperator">&lt;&gt; </span><span class="TPstring">" " </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">90</span>
+
+<span class="TPnumber">100 </span><span class="TPcomment">rem Constants</span>
+<span class="TPnumber">110 </span>minY$ <span class="TPoperator">= </span><span class="TPnumber">3 </span>: maxY$ <span class="TPoperator">= </span><span class="TPnumber">17</span>
+
+<span class="TPnumber">200 </span><span class="TPcomment">rem Game initialisation</span>
+<span class="TPnumber">205 </span><span class="TPkeyword1">cls</span>
+<span class="TPnumber">210 </span>player1y$ <span class="TPoperator">=  </span><span class="TPnumber">5 </span>: player1x$ <span class="TPoperator">=  </span><span class="TPnumber">5 </span>: missile1y$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: missile1x$ <span class="TPoperator">= </span><span class="TPnumber">0</span>
+<span class="TPnumber">220 </span>player2y$ <span class="TPoperator">= </span><span class="TPnumber">15 </span>: player2x$ <span class="TPoperator">= </span><span class="TPnumber">30 </span>: missile2y$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: missile2x$ <span class="TPoperator">= </span><span class="TPnumber">0</span>
+<span class="TPnumber">230 </span>player1Score$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: player2Score$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">0</span>
+<span class="TPnumber">240 </span><span class="TPkeyword1">gosub </span><span class="TPnumber">400</span>
+
+
+<span class="TPnumber">300 </span><span class="TPcomment">rem Main game loop</span>
+<span class="TPnumber">301 </span><span class="TPkeyword1">if </span>player1Score$ <span class="TPoperator">= </span><span class="TPnumber">10 </span><span class="TPkeyword5">and </span>playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">900</span>
+<span class="TPnumber">302 </span><span class="TPkeyword1">if </span>player2Score$ <span class="TPoperator">= </span><span class="TPnumber">10 </span><span class="TPkeyword5">and </span>playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">900</span>
+<span class="TPnumber">305 </span><span class="TPkeyword1">if </span>playerToExplode$ <span class="TPoperator">&lt;&gt; </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">1000</span>
+<span class="TPnumber">310 </span><span class="TPkeyword1">locate </span>player1y$, player1x$
+<span class="TPnumber">311 </span><span class="TPkeyword1">print </span><span class="TPstring">"&gt;=-"</span>
+<span class="TPnumber">315 </span><span class="TPkeyword1">locate </span>player2y$, player2x$
+<span class="TPnumber">316 </span><span class="TPkeyword1">print </span><span class="TPstring">"-=&lt;"</span>
+<span class="TPnumber">325 </span><span class="TPkeyword1">if </span>missile1x$ <span class="TPoperator">&lt;&gt; </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">750</span>
+<span class="TPnumber">326 </span><span class="TPkeyword1">if </span>missile2x$ <span class="TPoperator">&lt;&gt; </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">850</span>
+<span class="TPnumber">330 </span>k$ <span class="TPoperator">= </span><span class="TPkeyword4">inkey$</span>
+<span class="TPnumber">340 </span><span class="TPkeyword1">if </span>k$ <span class="TPoperator">= </span><span class="TPstring">"a" </span><span class="TPkeyword5">and </span>player1y$ <span class="TPoperator">&gt; </span>minY$  <span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">610 </span>: player1y$ <span class="TPoperator">= </span>player1y$ <span class="TPoperator">- </span><span class="TPnumber">1</span>
+<span class="TPnumber">350 </span><span class="TPkeyword1">if </span>k$ <span class="TPoperator">= </span><span class="TPstring">"z" </span><span class="TPkeyword5">and </span>player1y$ <span class="TPoperator">&lt; </span>maxY$ <span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">610 </span>: player1y$ <span class="TPoperator">= </span>player1y$ <span class="TPoperator">+ </span><span class="TPnumber">1</span>
+<span class="TPnumber">355 </span><span class="TPkeyword1">if </span>k$ <span class="TPoperator">= </span><span class="TPstring">" " </span><span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">700</span>
+<span class="TPnumber">360 </span><span class="TPkeyword1">if </span>k$ <span class="TPoperator">= </span><span class="TPstring">"q" </span><span class="TPkeyword3">then </span><span class="TPkeyword1">end</span>
+<span class="TPnumber">369 </span><span class="TPcomment">rem Control the computer player</span>
+<span class="TPnumber">370 </span><span class="TPkeyword1">gosub </span><span class="TPnumber">500</span>
+<span class="TPnumber">380 </span><span class="TPkeyword1">goto </span><span class="TPnumber">300</span>
+
+<span class="TPnumber">400 </span><span class="TPcomment">rem Update scores</span>
+<span class="TPnumber">410 </span><span class="TPkeyword1">locate </span><span class="TPnumber">1</span>, <span class="TPnumber">2</span>
+<span class="TPnumber">420 </span><span class="TPkeyword1">print </span><span class="TPstring">"Player 1: " </span>player1Score$
+<span class="TPnumber">430 </span><span class="TPkeyword1">locate </span><span class="TPnumber">1</span>, <span class="TPnumber">24</span>
+<span class="TPnumber">440 </span><span class="TPkeyword1">print </span><span class="TPstring">"Player 2: " </span>player2Score$
+<span class="TPnumber">450 </span><span class="TPkeyword1">return</span>
+
+<span class="TPnumber">500 </span><span class="TPcomment">rem Artificial intelligence</span>
+<span class="TPnumber">510 </span>r$ <span class="TPoperator">= </span><span class="TPkeyword4">fix</span><span class="TPbracket">(</span><span class="TPkeyword4">rnd </span><span class="TPoperator">* </span><span class="TPnumber">50</span><span class="TPbracket">)</span>
+<span class="TPnumber">520 </span><span class="TPkeyword1">if </span>r$ <span class="TPoperator">= </span><span class="TPnumber">1 </span><span class="TPkeyword5">and </span>player2y$ <span class="TPoperator">&gt; </span>minY$ <span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">650 </span>: player2y$ <span class="TPoperator">= </span>player2y$ <span class="TPoperator">- </span><span class="TPnumber">1</span>
+<span class="TPnumber">530 </span><span class="TPkeyword1">if </span>r$ <span class="TPoperator">= </span><span class="TPnumber">2 </span><span class="TPkeyword5">and </span>player2y$ <span class="TPoperator">&lt; </span>maxY$ <span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">650 </span>: player2y$ <span class="TPoperator">= </span>player2y$ <span class="TPoperator">+ </span><span class="TPnumber">1</span>
+<span class="TPnumber">540 </span><span class="TPkeyword1">if </span>r$ <span class="TPoperator">= </span><span class="TPnumber">3 </span><span class="TPkeyword5">or </span>player1y$ <span class="TPoperator">= </span>player2y$ <span class="TPkeyword3">then </span><span class="TPkeyword1">gosub </span><span class="TPnumber">800</span>
+<span class="TPnumber">590 </span><span class="TPkeyword1">return</span>
+
+<span class="TPnumber">600 </span><span class="TPcomment">rem Sub-routines</span>
+<span class="TPnumber">610 </span><span class="TPcomment">rem Clear player one's ship</span>
+<span class="TPnumber">620 </span><span class="TPkeyword1">locate </span>player1y$, player1x$
+<span class="TPnumber">630 </span><span class="TPkeyword1">print </span><span class="TPstring">"   "</span>
+<span class="TPnumber">640 </span><span class="TPkeyword1">return</span>
+
+<span class="TPnumber">650 </span><span class="TPcomment">rem Clear player two's ship</span>
+<span class="TPnumber">660 </span><span class="TPkeyword1">locate </span>player2y$, player2x$
+<span class="TPnumber">670 </span><span class="TPkeyword1">print </span><span class="TPstring">"   "</span>
+<span class="TPnumber">680 </span><span class="TPkeyword1">return</span>
+
+
+<span class="TPnumber">700 </span><span class="TPcomment">rem initialise player one's missile</span>
+<span class="TPnumber">710 </span><span class="TPkeyword1">if </span>missile1y$ <span class="TPoperator">&lt;&gt; </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">return</span>
+<span class="TPnumber">720 </span>missile1y$ <span class="TPoperator">= </span>player1y$
+<span class="TPnumber">730 </span>missile1x$ <span class="TPoperator">= </span>player1x$ <span class="TPoperator">+ </span><span class="TPnumber">3</span>
+<span class="TPnumber">740 </span><span class="TPkeyword1">return</span>
+
+
+<span class="TPnumber">750 </span><span class="TPcomment">rem Process player one's missile</span>
+<span class="TPnumber">752 </span><span class="TPkeyword1">locate </span>missile1y$, missile1x$
+<span class="TPnumber">753 </span><span class="TPkeyword1">print </span><span class="TPstring">" "</span>
+<span class="TPnumber">755 </span><span class="TPkeyword1">if </span>missile1x$ <span class="TPoperator">= </span>player2x$ <span class="TPoperator">+ </span><span class="TPnumber">3 </span><span class="TPkeyword3">then </span>missile1y$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: missile1x$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: <span class="TPkeyword1">return</span>
+<span class="TPnumber">757 </span>missile1x$ <span class="TPoperator">= </span>missile1x$ <span class="TPoperator">+ </span><span class="TPnumber">1</span>
+<span class="TPnumber">760 </span><span class="TPkeyword1">locate </span>missile1y$, missile1x$
+<span class="TPnumber">770 </span><span class="TPkeyword1">print </span><span class="TPstring">"."</span>
+<span class="TPnumber">780 </span><span class="TPkeyword1">if </span>missile1y$ <span class="TPoperator">= </span>player2y$ <span class="TPkeyword5">and </span>missile1x$ <span class="TPoperator">= </span>player2x$ <span class="TPkeyword3">then </span>missile1y$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: missile1x$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: player1Score$ <span class="TPoperator">= </span>player1Score$ <span class="TPoperator">+ </span><span class="TPnumber">1 </span>: playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">2 </span>: i$ <span class="TPoperator">= </span><span class="TPnumber">1</span>
+<span class="TPnumber">790 </span><span class="TPkeyword1">return</span>
+
+<span class="TPnumber">800 </span><span class="TPcomment">rem initialise player two's missile  </span>
+<span class="TPnumber">810 </span><span class="TPkeyword1">if </span>missile2y$ <span class="TPoperator">&lt;&gt; </span><span class="TPnumber">0 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">return</span>
+<span class="TPnumber">820 </span>missile2y$ <span class="TPoperator">= </span>player2y$
+<span class="TPnumber">830 </span>missile2x$ <span class="TPoperator">= </span>player2x$ <span class="TPoperator">- </span><span class="TPnumber">1</span>
+<span class="TPnumber">840 </span><span class="TPkeyword1">return</span>
+
+<span class="TPnumber">850 </span><span class="TPcomment">rem Process player two's missile</span>
+<span class="TPnumber">852 </span><span class="TPkeyword1">locate </span>missile2y$, missile2x$
+<span class="TPnumber">853 </span><span class="TPkeyword1">print </span><span class="TPstring">" "</span>
+<span class="TPnumber">855 </span><span class="TPkeyword1">if </span>missile2x$ <span class="TPoperator">= </span>player1x$ <span class="TPoperator">- </span><span class="TPnumber">1 </span><span class="TPkeyword3">then </span>missile2y$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: missile2x$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: <span class="TPkeyword1">return</span>
+<span class="TPnumber">857 </span>missile2x$ <span class="TPoperator">= </span>missile2x$ <span class="TPoperator">- </span><span class="TPnumber">1</span>
+<span class="TPnumber">860 </span><span class="TPkeyword1">locate </span>missile2y$, missile2x$
+<span class="TPnumber">870 </span><span class="TPkeyword1">print </span><span class="TPstring">"."</span>
+<span class="TPnumber">880 </span><span class="TPkeyword1">if </span>missile2y$ <span class="TPoperator">= </span>player1y$ <span class="TPkeyword5">and </span>missile2x$ <span class="TPoperator">&gt;= </span>player1x$ <span class="TPkeyword5">and </span>missile2x$ <span class="TPoperator">&lt; </span>player1x$ <span class="TPoperator">+ </span><span class="TPnumber">3 </span><span class="TPkeyword3">then </span>missile2y$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: missile2x$ <span class="TPoperator">= </span><span class="TPnumber">0 </span>: player2Score$ <span class="TPoperator">= </span>player2Score$ <span class="TPoperator">+ </span><span class="TPnumber">1 </span>: playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">1 </span>: i$ <span class="TPoperator">= </span><span class="TPnumber">1</span>
+<span class="TPnumber">890 </span><span class="TPkeyword1">return</span>
+
+<span class="TPnumber">900 </span><span class="TPcomment">rem Print that a player was won</span>
+<span class="TPnumber">910 </span><span class="TPkeyword1">if </span>player1Score$ <span class="TPoperator">= </span><span class="TPnumber">10 </span><span class="TPkeyword3">then </span>message$ <span class="TPoperator">= </span><span class="TPstring">"PLAYER ONE WINS!!!!" </span><span class="TPkeyword1">else </span>message$ <span class="TPoperator">= </span><span class="TPstring">"PLAYER TWO WINS!!!!"</span>
+<span class="TPnumber">930 </span><span class="TPkeyword1">locate </span><span class="TPnumber">7</span>, <span class="TPnumber">10 </span>: <span class="TPkeyword1">print </span>message$
+<span class="TPnumber">940 </span><span class="TPkeyword1">locate </span><span class="TPnumber">9</span>, <span class="TPnumber">9 </span>: <span class="TPkeyword1">print </span><span class="TPstring">"Press 'C' to continue"</span>
+<span class="TPnumber">950 </span><span class="TPkeyword1">if </span><span class="TPkeyword4">inkey$ </span><span class="TPoperator">= </span><span class="TPstring">"c" </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">10 </span><span class="TPkeyword1">else goto </span><span class="TPnumber">950</span>
+
+<span class="TPnumber">1000 </span><span class="TPcomment">rem Explode a ship. Assumes playerToExplode$ has been set to 1 or 2</span>
+<span class="TPnumber">1005 </span><span class="TPkeyword1">if </span>playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">1 </span><span class="TPkeyword3">then </span>x$ <span class="TPoperator">= </span>player1x$ <span class="TPoperator">+ </span><span class="TPnumber">1 </span>: y$ <span class="TPoperator">= </span>player1y$ <span class="TPkeyword1">else  </span>x$ <span class="TPoperator">= </span>player2x$ <span class="TPoperator">+ </span><span class="TPnumber">1 </span>: y$ <span class="TPoperator">= </span>player2y$
+<span class="TPnumber">1006 </span><span class="TPkeyword1">if </span>i$ <span class="TPoperator">= </span><span class="TPnumber">4 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">1030</span>
+<span class="TPnumber">1007 </span><span class="TPkeyword1">locate </span>y$ <span class="TPoperator">- </span>i$, x$
+<span class="TPnumber">1008 </span><span class="TPkeyword1">print </span><span class="TPstring">"*"</span>
+<span class="TPnumber">1009 </span><span class="TPkeyword1">locate </span>y$ <span class="TPoperator">+ </span>i$, x$
+<span class="TPnumber">1013 </span><span class="TPkeyword1">print </span><span class="TPstring">"*"</span>
+<span class="TPnumber">1015 </span><span class="TPkeyword1">locate </span>y$ <span class="TPoperator">- </span>i$, x$ <span class="TPoperator">- </span>i$ : <span class="TPkeyword1">print </span><span class="TPstring">"."</span>
+<span class="TPnumber">1016 </span><span class="TPkeyword1">locate </span>y$ <span class="TPoperator">- </span>i$, x$ <span class="TPoperator">+ </span>i$ : <span class="TPkeyword1">print </span><span class="TPstring">"."</span>
+<span class="TPnumber">1017 </span><span class="TPkeyword1">locate </span>y$ <span class="TPoperator">+ </span>i$, x$ <span class="TPoperator">+ </span>i$ : <span class="TPkeyword1">print </span><span class="TPstring">"."</span>
+<span class="TPnumber">1018 </span><span class="TPkeyword1">locate </span>y$ <span class="TPoperator">+ </span>i$, x$ <span class="TPoperator">- </span>i$ : <span class="TPkeyword1">print </span><span class="TPstring">"."</span>
+<span class="TPnumber">1030 </span><span class="TPcomment">rem Tight loop execution to slow down the animation speed only</span>
+<span class="TPnumber">1040 </span><span class="TPkeyword1">for </span>j$ <span class="TPoperator">= </span><span class="TPnumber">1 </span><span class="TPkeyword3">to </span><span class="TPnumber">1000</span>
+<span class="TPnumber">1050   </span><span class="TPkeyword1">locate </span>y$, x$ <span class="TPoperator">- </span>i$
+<span class="TPnumber">1060   </span><span class="TPkeyword1">print </span><span class="TPkeyword4">string$</span><span class="TPbracket">(</span>i$ <span class="TPoperator">* </span><span class="TPnumber">2 </span><span class="TPoperator">+ </span><span class="TPnumber">1</span>, <span class="TPstring">"*"</span><span class="TPbracket">)</span>
+<span class="TPnumber">1070 </span><span class="TPkeyword3">next </span>j$
+<span class="TPnumber">1080 </span>i$ <span class="TPoperator">= </span>i$ <span class="TPoperator">+ </span><span class="TPnumber">1</span>
+<span class="TPnumber">1090 </span><span class="TPkeyword1">if </span>i$ <span class="TPoperator">&lt; </span><span class="TPnumber">5 </span><span class="TPkeyword3">then </span><span class="TPkeyword1">goto </span><span class="TPnumber">300</span>
+<span class="TPnumber">1100 </span>playerToExplode$ <span class="TPoperator">= </span><span class="TPnumber">0</span>
+<span class="TPnumber">1110 </span><span class="TPkeyword1">cls</span>
+<span class="TPnumber">1120 </span><span class="TPkeyword1">gosub </span><span class="TPnumber">400</span>
+<span class="TPnumber">1130 </span>player1y$ <span class="TPoperator">= </span>minY$ <span class="TPoperator">+ </span><span class="TPnumber">1 </span>: player2y$ <span class="TPoperator">= </span>maxY$ <span class="TPoperator">- </span><span class="TPnumber">1</span>
+<span class="TPnumber">1140 </span><span class="TPkeyword1">goto </span><span class="TPnumber">300</span>
+
+
+</pre>
+
+</body>
+</html>
+
+
+
+
+
