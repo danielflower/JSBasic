@@ -25,6 +25,11 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebCompiler", "WebCompiler\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSBasic.Compiler", "Compiler\JSBasic.Compiler.csproj", "{981F3B07-17CA-4860-A4DF-D564B78F4A28}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3530BCC4-157E-436B-9220-2850E822D568}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
