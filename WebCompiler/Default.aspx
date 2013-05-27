@@ -72,7 +72,7 @@
 		to JavaScript.  You can then see your program run.
 	</p>
 	<p>
-		For an example game written in JSBasic, see <a href="SpaceWar.htm">Space War</a>.
+		For an example game written in JSBasic, see <a href="default.aspx?sourceCode=SpaceWar">Space War</a>.
 		To learn more about JSBasic, see the 
 		<a href="http://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=3290305">article at CodeProject</a>.
 	</p>

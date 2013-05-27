@@ -12,9 +12,12 @@ using System.Xml.Linq;
 using JSBasic.Compiler;
 using Irony.Compiler;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public partial class _Default : System.Web.UI.Page 
 {
+    Regex validator = new Regex("[A-Za-z]+");
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -23,7 +26,7 @@ public partial class _Default : System.Web.UI.Page
 
 
 		string sourceFile = Request.Params["sourceCode"];
-		if (!IsPostBack && !string.IsNullOrEmpty(sourceFile))
+		if (!IsPostBack && !string.IsNullOrEmpty(sourceFile) && validator.IsMatch(sourceFile))
 		{
 			string path = Server.MapPath("App_Data/" + sourceFile + ".basic");
 			if (File.Exists(path))
